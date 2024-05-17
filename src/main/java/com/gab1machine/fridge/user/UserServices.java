@@ -11,8 +11,11 @@ import java.util.UUID;
 @Service
 
 public class UserServices {
-
     private final UserRepository userRepository;
+
+    public UserOutputDto dtoToOdto(UserDto dto) {
+        return new UserOutputDto(dto.id(), dto.name());
+    }
 
     private UserDto entityToDto(UserEntity entity) {
         return new UserDto(entity.getId(), entity.getName(), entity.getEmail(), entity.getHashedPassword());
