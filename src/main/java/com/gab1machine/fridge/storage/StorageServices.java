@@ -33,4 +33,8 @@ public class StorageServices {
         Optional<StorageEntity> entity = this.storageRepository.findById(id);
         return entity.map(this::entityToDto);
     }
+
+    public Optional<StorageEntity> getStorageEntity(UUID id) {
+        return this.storageRepository.findById(id);
+    }
 }
