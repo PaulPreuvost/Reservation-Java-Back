@@ -37,4 +37,8 @@ public class StorageServices {
     public Optional<StorageEntity> getStorageEntity(UUID id) {
         return this.storageRepository.findById(id);
     }
+
+    public boolean exist(UUID id) {
+        return this.storageRepository.existsById(id);
+    }
 }

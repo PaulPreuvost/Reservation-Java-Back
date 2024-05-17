@@ -20,6 +20,4 @@ public class StorageEntity {
     private Integer size;
     @Column(nullable = false)
     private Date date;
-    @OneToMany(mappedBy = "storage")
-    private Set<ReservationEntity> reservations;
 }

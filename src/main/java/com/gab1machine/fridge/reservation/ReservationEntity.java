@@ -17,8 +17,7 @@ public class ReservationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne(optional = false)
-    private StorageEntity storage;
+    private UUID storage;
     @Column(nullable = false)
     private int size;
     @Column(nullable = false)

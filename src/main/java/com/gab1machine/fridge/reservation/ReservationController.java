@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,26 +20,35 @@ import java.util.UUID;
 public class ReservationController {
     private final ReservationServices reservationServices;
 
+    @Operation(summary = "Get a reservation by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retreived successfully",
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ReservationDto.class)
+                            )
+                    }),
+    })
     @GetMapping
-    public @ResponseBody ResponseEntity<ReservationDto> getReservation(@PathVariable @RequestParam(name = "id", required = true) UUID id) {
+    public @ResponseBody ResponseEntity<ReservationOutputDto> getReservation(@PathVariable @RequestParam(name = "id", required = true) UUID id) {
         Optional<ReservationDto> dto = this.reservationServices.getReservation(id);
-        return dto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return dto.map(reservationDto -> ResponseEntity.ok(this.reservationServices.dtoToODto(reservationDto))).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @Operation(summary = "Crate a Reservation")
+    @Operation(summary = "Create a Reservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Created successfully",
                 content = {
                     @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ReservationDto.class))
             }),
-            @ApiResponse(responseCode = "200", description = "Invalid Informations (date or storage invalid)",
+            @ApiResponse(responseCode = "400", description = "Invalid Informations (date or storage invalid)",
                     content = @Content
             ),
     })
     @PostMapping
-    public @ResponseBody ResponseEntity<ReservationDto> postStorage(@RequestBody ReservationDto requestDto) {
+    public @ResponseBody ResponseEntity<ReservationOutputDto> postStorage(@RequestBody ReservationDto requestDto) {
         Optional<ReservationDto> dto = this.reservationServices.createReservation(requestDto);
-        return dto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+        return dto.map(reservationDto -> ResponseEntity.ok(this.reservationServices.dtoToODto(reservationDto))).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }

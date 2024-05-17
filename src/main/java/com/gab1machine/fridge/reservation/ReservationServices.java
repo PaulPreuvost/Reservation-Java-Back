@@ -21,9 +21,11 @@ public class ReservationServices {
     private final StorageServices storageServices;
 
     private ReservationDto entityToDto(ReservationEntity entity) {
-        return new ReservationDto(entity.getId(), entity.getDate(), entity.getSize(),
-                namedAPIResourceServices.storageResource(entity.getStorage())
-        );
+        return new ReservationDto(entity.getId(), entity.getDate(), entity.getSize(), entity.getStorage());
+    }
+
+    public ReservationOutputDto dtoToODto(ReservationDto dto) {
+        return new ReservationOutputDto(dto.id(), dto.date(), dto.size(), namedAPIResourceServices.storageResource(dto.id()));
     }
 
     public Optional<ReservationDto> getReservation(UUID id) {
@@ -31,33 +33,32 @@ public class ReservationServices {
         return entity.map(this::entityToDto);
     }
 
-    private ReservationEntity createReservationEntity(ReservationDto reservationDto, StorageEntity storage) {
+    private ReservationEntity createReservationEntity(ReservationDto reservationDto) {
         ReservationEntity entity = new ReservationEntity();
-        entity.setStorage(storage);
+        entity.setStorage(reservationDto.storage());
         entity.setDate(reservationDto.date());
         entity.setSize(reservationDto.size());
         return entity;
     }
 
-    private ReservationEntity createAndPercistReservationEntity(ReservationDto reservationDto, StorageEntity storage) {
-        ReservationEntity entity = this.createReservationEntity(reservationDto, storage);
+    private ReservationEntity createAndPercistReservationEntity(ReservationDto reservationDto) {
+        ReservationEntity entity = this.createReservationEntity(reservationDto);
         this.reservationRepository.save(entity);
         return entity;
     }
 
     public Optional<ReservationDto> createReservation(ReservationDto reservationDto) {
-        Optional<StorageEntity> storageEntity = this.storageServices.getStorageEntity(reservationDto.storage().id());
-        if (storageEntity.isEmpty()) {
+        UUID storageId = reservationDto.storage();
+        if (this.storageServices.exist(storageId)) {
             return Optional.empty();
         }
         ReservationEntity exampleEntity = new ReservationEntity();
         exampleEntity.setDate(reservationDto.date());
-        exampleEntity.setStorage(storageEntity.get());
+        exampleEntity.setStorage(storageId);
         List<ReservationEntity> reservations = this.reservationRepository.findAll(Example.of(exampleEntity));
         if (reservations.isEmpty()) {
-            return Optional.of(this.entityToDto(this.createAndPercistReservationEntity(reservationDto, storageEntity.get())));
+            return Optional.of(this.entityToDto(this.createAndPercistReservationEntity(reservationDto)));
         }
-
-        return Optional.of(this.entityToDto(this.createAndPercistReservationEntity(reservationDto, storageEntity.get())));
+        return Optional.of(this.entityToDto(this.createAndPercistReservationEntity(reservationDto)));
     }
 }
