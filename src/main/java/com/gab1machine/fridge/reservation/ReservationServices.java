@@ -7,12 +7,14 @@ import com.gab1machine.fridge.storage.StorageEntity;
 import com.gab1machine.fridge.storage.StorageServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Service
 public class ReservationServices {
     private final ReservationRepository reservationRepository;
     private final NamedAPIResourceServices namedAPIResourceServices;

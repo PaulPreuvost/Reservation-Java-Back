@@ -15,7 +15,7 @@ public class ReservationController {
     private final ReservationServices reservationServices;
 
     @GetMapping
-    public @ResponseBody ResponseEntity<ReservationDto> getReservation(@RequestParam(name = "id", required = true) UUID id) {
+    public @ResponseBody ResponseEntity<ReservationDto> getReservation(@PathVariable @RequestParam(name = "id", required = true) UUID id) {
         Optional<ReservationDto> dto = this.reservationServices.getReservation(id);
         return dto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
