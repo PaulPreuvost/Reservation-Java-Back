@@ -1,7 +1,11 @@
 package com.GAB1NMACHINE.MicoWave.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 public class MicroWave {
     @Id
@@ -17,9 +21,11 @@ public class MicroWave {
 
     private float dateEnd;
 
+    // Constructeur par défaut
     public MicroWave() {
     }
 
+    // Constructeur avec paramètre
     public MicroWave(User associedUserId) {
         this.associedUserId = associedUserId;
     }
