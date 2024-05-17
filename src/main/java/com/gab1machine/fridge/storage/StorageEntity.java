@@ -1,8 +1,6 @@
 package com.gab1machine.fridge.storage;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +12,7 @@ import java.util.UUID;
 @Setter
 public class StorageEntity {
     @Id
+    @GeneratedValue( strategy = GenerationType.UUID)
     private UUID id;
     @Column(nullable = false)
     private Integer size;
