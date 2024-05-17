@@ -3,6 +3,7 @@ package com.gab1machine.fridge.storage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -10,6 +11,10 @@ import java.util.UUID;
 public class StorageServices {
 
     private final StorageRepository storageRepository;
+
+    private StorageDto entityToDto(StorageEntity entity) {
+        return new StorageDto(entity.getId(), entity.getDate(), entity.getSize());
+    }
 
     public StorageDto createStorage(StorageDto storage) {
         /*if (this.storageRepository.existsByLabel(storage.label())) {
@@ -22,5 +27,10 @@ public class StorageServices {
         storageEntity.setDate(storage.date());
         StorageEntity savedStorage = this.storageRepository.save(storageEntity);
         return new StorageDto(savedStorage.getId(), savedStorage.getDate(), savedStorage.getSize());
+    }
+
+    public Optional<StorageDto> getStorage(UUID id) {
+        Optional<StorageEntity> entity = this.storageRepository.findById(id);
+        return entity.map(this::entityToDto);
     }
 }
