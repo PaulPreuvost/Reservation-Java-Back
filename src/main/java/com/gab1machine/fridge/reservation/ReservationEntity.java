@@ -16,13 +16,10 @@ public class ReservationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private StorageEntity storage;
-
     @Column(nullable = false)
     private int size;
-
     @Column(nullable = false)
     private Date date;
 }
