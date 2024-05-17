@@ -20,7 +20,7 @@ import java.nio.file.Path;
 
 class ReservationControllerTests {
 
-	private static final String TESTED_URL = "/reservations";
+	private static final String TESTED_URL = "/reservation";
 
 	@Autowired
 	private MockMvc mockMvc;
