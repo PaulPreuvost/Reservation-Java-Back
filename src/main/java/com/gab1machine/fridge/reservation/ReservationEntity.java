@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
+@Entity
 public class ReservationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
