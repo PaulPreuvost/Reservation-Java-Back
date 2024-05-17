@@ -12,7 +12,7 @@ public class StorageServices {
 
     private final StorageRepository storageRepository;
 
-    private StorageDto entityToDto(StorageEntity entity) {
+    public StorageDto entityToDto(StorageEntity entity) {
         return new StorageDto(entity.getId(), entity.getDate(), entity.getSize());
     }
 

@@ -1,4 +1,4 @@
-package com.gab1machine.fridge;
+package com.gab1machine.fridge.common;
 
 import java.util.UUID;
 

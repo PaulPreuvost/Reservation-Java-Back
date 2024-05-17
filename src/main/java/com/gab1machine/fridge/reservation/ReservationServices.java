@@ -1,10 +1,10 @@
 package com.gab1machine.fridge.reservation;
 
-import com.gab1machine.fridge.NamedAPIResource;
-import com.gab1machine.fridge.storage.StorageDto;
+import com.gab1machine.fridge.common.NamedAPIResource;
+import com.gab1machine.fridge.common.NamedAPIResourceServices;
 import com.gab1machine.fridge.storage.StorageEntity;
+import com.gab1machine.fridge.storage.StorageServices;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -12,11 +12,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationServices {
     private final ReservationRepository reservationRepository;
+    private final StorageServices storageServices;
+    private final NamedAPIResourceServices namedAPIResourceServices;
 
     private ReservationDto entityToDto(ReservationEntity entity) {
-        UUID storageId = entity.getStorage().getId();
         return new ReservationDto(entity.getId(), entity.getDate(), entity.getSize(),
-                new NamedAPIResource("storage", storageId ,"/storage?id=" + storageId.toString())
+                namedAPIResourceServices.storageResource(this.storageServices.entityToDto(entity.getStorage()))
         );
     }
 
