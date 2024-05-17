@@ -1,4 +1,4 @@
-package fridge.storage;
+package com.gab1machine.fridge.storage;
 
 import java.sql.Date;
 import java.util.UUID;

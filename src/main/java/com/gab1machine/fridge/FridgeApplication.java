@@ -1,4 +1,4 @@
-package fridge;
+package com.gab1machine.fridge;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package fridge.user;
+package com.gab1machine.fridge.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

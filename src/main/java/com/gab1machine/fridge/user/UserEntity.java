@@ -1,4 +1,4 @@
-package fridge.storage;
+package com.gab1machine.fridge.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,17 +6,14 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-public class StorageEntity {
+public class UserEntity {
     @Id
     private UUID id;
     @Column(nullable = false)
-    private Integer size;
-    @Column(nullable = false)
-    private Date date;
+    private String name;
 }

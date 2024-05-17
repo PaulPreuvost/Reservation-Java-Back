@@ -1,4 +1,4 @@
-package fridge.user;
+package com.gab1machine.fridge.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
