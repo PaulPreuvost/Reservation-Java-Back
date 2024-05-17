@@ -16,8 +16,10 @@ public class UserController {
     private final UserServices userServices;
 
     @PostMapping
-    public @ResponseBody UserDto createUser(@RequestBody UserDto season) {
-        return this.userServices.createUser(season);
+    public @ResponseBody ResponseEntity<UserDto> createUser(@RequestBody UserInputDto dto) {
+        Optional<UserDto> userDto = this.userServices.createUser(dto);
+        return userDto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+
     }
 
     @GetMapping
